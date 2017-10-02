@@ -139,4 +139,6 @@ abstract class ViewElement
         return isset($this->dataAttributes[trim($attributeName)]);
     }
 
+    public abstract function & render() : array;
+
 }

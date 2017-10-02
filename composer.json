@@ -1,3 +1,21 @@
 {
-
+  "name": "yumi/bundler",
+  "description": "Yumi Bundler Components",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Reverze",
+      "email": "hawkmedia24@gmail.com"
+    },
+    {
+      "name": "Damix",
+      "email": "damix.swayware@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0",
+  "autoload": {
+    "psr-4": {
+      "Yumi\\Bundler\\": "src/"
+    }
+  }
 }

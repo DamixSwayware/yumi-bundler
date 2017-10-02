@@ -4,11 +4,11 @@ namespace Yumi\Bundler\View;
 
 use Yumi\Bundler\View\Table\Table;
 
-class ViewContent
+class ViewContent extends ViewElement
 {
     /**
      * List of tables to view
-     * @var array
+     * @var \Yumi\Bundler\View\Table\Table[]
      */
     private $table_list = array();
 
@@ -53,5 +53,16 @@ class ViewContent
     public function getTables() : array
     {
         return $this->table_list;
+    }
+
+    public function & render()
+    {
+        $renderResult = array();
+
+        $renderResult['tables'] = array();
+
+        foreach($this->table_list as &$table){
+            $renderResult['tables'][] = $table->render();
+        }
     }
 }
