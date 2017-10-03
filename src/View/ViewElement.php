@@ -5,11 +5,6 @@ namespace Yumi\Bundler\View;
 abstract class ViewElement
 {
     /**
-     * @var null
-     */
-    protected $tagName = null;
-
-    /**
      * ID of element
      * @var string|null
      */
@@ -44,12 +39,7 @@ abstract class ViewElement
 
     }
 
-    public function getTagName() : string
-    {
-        return $this->tagName;
-    }
-
-    public function getId() : string
+    public function getId() : ?string
     {
         return $this->id;
     }
@@ -76,47 +66,56 @@ abstract class ViewElement
 
     public function setId($value) : self
     {
-        $this->id = (string) $value;
+        $this->id = trim((string) $value);
+        return $this;
     }
 
     public function setClasses(array $classes) : self
     {
-        $this->classes = (array) $classes;
+        $this->classes = $classes;
+        return $this;
     }
 
     public function addClass(string $className) : self
     {
         $this->classes[] = $className;
+        return $this;
     }
 
     public function setStyles(array $styles) : self
     {
         $this->styles = $styles;
+        return $this;
     }
 
-    public function addStyle(string $modifierName, $modifierValue)
+    public function addStyle(string $modifierName, $modifierValue) : self
     {
         $this->styles[trim($modifierName)] = (string) $modifierValue;
+        return $this;
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes) : self
     {
         $this->attributes = $attributes;
+        return $this;
     }
 
-    public function addAttribute(string $attributeName, $attributeValue)
+    public function addAttribute(string $attributeName, $attributeValue) : self
     {
         $this->attributes[trim($attributeName)] = (string) $attributeValue;
+        return $this;
     }
 
-    public function setDataAttributes(array $dataAttributes)
+    public function setDataAttributes(array $dataAttributes) : self
     {
         $this->dataAttributes = $dataAttributes;
+        return $this;
     }
 
-    public function addDataAttribute(string $attributeName, $attributeValue)
+    public function addDataAttribute(string $attributeName, $attributeValue) : self
     {
-        $this->attributes[trim($attributeName)] = (string) $attributeValue;
+        $this->dataAttributes[trim($attributeName)] = (string) $attributeValue;
+        return $this;
     }
 
     public function isClassExists(string $className) : bool
@@ -139,6 +138,17 @@ abstract class ViewElement
         return isset($this->dataAttributes[trim($attributeName)]);
     }
 
-    public abstract function & render() : array;
+    public function & render() : array
+    {
+        $element = array();
+
+        $element['id'] = $this->getId();
+        $element['classes'] = $this->getClasses();
+        $element['styles'] = $this->getStyles();
+        $element['attributes'] = $this->getAttributes();
+        $element['dataAttributes'] = $this->getDataAttributes();
+
+        return $element;
+    }
 
 }
