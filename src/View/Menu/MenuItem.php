@@ -106,6 +106,8 @@ class MenuItem extends ViewElement
             'tooltipText' => $this->tooltip,
         ];
 
+        $item = array_merge($item, parent::render());
+
         return $item;
     }
 }

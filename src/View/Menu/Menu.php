@@ -37,11 +37,21 @@ class Menu extends ViewElement
      */
     private $position = null;
 
+    /**
+     * Menu header
+     * @var \Yumi\Bundler\View\Menu\MenuHeader
+     */
+    private $header = null;
+
+    /**
+     * Menu items
+     * @var \Yumi\Bundler\View\Menu\MenuItem[]
+     */
+    private $items = array();
+
     public function __construct()
     {
         parent::__construct();
-
-        $this->tagName = 'menu';
 
         $this->setDefaultPosition();
 
@@ -81,8 +91,108 @@ class Menu extends ViewElement
         return $this->position;
     }
 
+    /**
+     * Creates and attachs new menu header.
+     * Existing header will be replaced
+     * @return MenuHeader
+     */
+    public function createHeader() : MenuHeader
+    {
+        $header = new MenuHeader();
+        $this->setHeader($header);
+        return $header;
+    }
+
+    /**
+     * Sets menu header
+     * @param MenuHeader $header
+     * @return Menu
+     */
+    public function setHeader(MenuHeader $header) : self
+    {
+        $this->header = $header;
+        return $this;
+    }
+
+    /**
+     * Gets menu header
+     * @return null|MenuHeader
+     */
+    public function getHeader() :? MenuHeader
+    {
+        return $this->header;
+    }
+
+    /**
+     * Creates and add new menu item
+     * @return MenuItem
+     */
+    public function createItem() : MenuItem
+    {
+        $item = new MenuItem();
+        $this->addItem($item);
+        return $item;
+    }
+
+    /**
+     * Adds menu item
+     * @param MenuItem $item
+     * @return Menu
+     */
+    public function addItem(MenuItem $item) : self
+    {
+        $this->items[] = $item;
+        return $this;
+    }
+
+    /**
+     * Sets menu items
+     * @param MenuItem[] $items
+     * @return Menu
+     * @throws MenuException
+     */
+    public function setItems(array $items) : self
+    {
+        foreach($items as &$item){
+            if (!$item instanceof MenuItem){
+                throw new MenuException("Menu item is not instance of MenuItem");
+            }
+        }
+
+        $this->items = $items;
+        return $this;
+    }
+
+    /**
+     * Gets menu item
+     * @return MenuItem[]
+     */
+    public function getItems() : array
+    {
+        return $this->items;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return array
+     */
     public function & render() : array
     {
-        return array();
+        $menu = array();
+
+        $menu['position'] = $this->getPosition();
+        $menu['header'] = !empty($this->getHeader()) ?
+            $this->getHeader()->render() : null;
+
+        $menuItems = array();
+
+        foreach($this->items as &$item){
+            $menuItems[] = $item->render();
+        }
+
+        $menu['items'] = $menuItems;
+
+        $menu = array_merge($menu, parent::render());
+        return $menu;
     }
 }

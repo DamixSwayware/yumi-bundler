@@ -68,12 +68,18 @@ class MenuHeader extends ViewElement
         return $this->subtitle;
     }
 
+    /**
+     * {@inheritdoc}
+     * @return array
+     */
     public function & render() : array
     {
         $header = [
             'title' => $this->getTitle(),
             'subTitle' => $this->getSubTitle(),
         ];
+
+        $header = array_merge($header, parent::render());
 
         return $header;
     }
