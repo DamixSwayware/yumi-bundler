@@ -22,7 +22,6 @@ class MenuHeader extends ViewElement
      */
     private $subtitle = null;
 
-    private $entries = array();
 
     public function __construct()
     {
@@ -36,7 +35,7 @@ class MenuHeader extends ViewElement
      */
     public function setTitle(string $title) : self
     {
-        $this->title = $title;
+        $this->title = trim($title);
         return $this;
     }
 
@@ -45,9 +44,9 @@ class MenuHeader extends ViewElement
      * @param string $subTitle
      * @return MenuHeader
      */
-    public function setSubTitle(string $subTitle) : self
+    public function setSubTitle(?string $subTitle) : self
     {
-        $this->subtitle = $subTitle;
+        $this->subtitle = trim($subTitle);
         return $this;
     }
 
@@ -71,6 +70,11 @@ class MenuHeader extends ViewElement
 
     public function & render() : array
     {
-        return array();
+        $header = [
+            'title' => $this->getTitle(),
+            'subTitle' => $this->getSubTitle(),
+        ];
+
+        return $header;
     }
 }
