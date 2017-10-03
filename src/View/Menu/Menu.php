@@ -53,6 +53,8 @@ class Menu extends ViewElement
     {
         parent::__construct();
 
+        $this->elementType = 'menu_element';
+
         $this->setDefaultPosition();
 
     }

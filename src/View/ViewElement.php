@@ -2,8 +2,12 @@
 
 namespace Yumi\Bundler\View;
 
+use Yumi\Bundler\View\Exception;
+
 abstract class ViewElement
 {
+    protected $elementType = null;
+
     /**
      * ID of element
      * @var string|null
@@ -142,6 +146,11 @@ abstract class ViewElement
     {
         $element = array();
 
+        if (empty($this->elementType)){
+            throw new Exception\ViewException("Missed element type");
+        }
+
+        $element['_element_type'] = trim($this->elementType);
         $element['id'] = $this->getId();
         $element['classes'] = $this->getClasses();
         $element['styles'] = $this->getStyles();

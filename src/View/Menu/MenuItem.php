@@ -31,6 +31,8 @@ class MenuItem extends ViewElement
     public function __construct()
     {
         parent::__construct();
+
+        $this->elementType = 'menu_item_element';
     }
 
     /**

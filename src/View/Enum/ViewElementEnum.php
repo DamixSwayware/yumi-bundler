@@ -28,6 +28,16 @@ abstract class ViewElementEnum
      */
     public const MENU_ELEMENT = 'menu';
 
+    /**
+     * Menu item element
+     */
+    public const MENU_ITEM_ELEMENT = 'menu_item';
+
+    /**
+     *
+     */
+    public const MENU_HEADER_ELEMENT = 'menu_header';
+
     private function __construct()
     {
         //nothing special to do here
