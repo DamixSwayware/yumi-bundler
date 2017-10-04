@@ -40,7 +40,7 @@ abstract class ViewElement
 
     public function __construct()
     {
-
+        $this->elementType = 'view_element';
     }
 
     public function getId() : ?string

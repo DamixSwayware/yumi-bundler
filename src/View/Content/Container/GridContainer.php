@@ -4,7 +4,7 @@
  * @author Reverze <hawkmedia24@gmail.com>
  */
 
-namespace Yumi\Bundler\View\Content;
+namespace Yumi\Bundler\View\Content\Container;
 
 class GridContainer extends Container
 {
@@ -17,6 +17,6 @@ class GridContainer extends Container
 
     public function & render() : array
     {
-        return array();
+        return parent::render();
     }
 }

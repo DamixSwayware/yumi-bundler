@@ -6,7 +6,7 @@
 
 namespace Yumi\Bundler\View;
 
-use Yumi\Bundler\View\Content\Content;
+use Yumi\Bundler\View\Content\Container\Container;
 use Yumi\Bundler\View\Menu\Exception\MenuException;
 use Yumi\Bundler\View\Menu\Menu;
 
@@ -18,9 +18,9 @@ class View extends ViewElement
     private $menus = array();
 
     /**
-     * @var Content
+     * @var Container
      */
-    private $content = null;
+    private $container = null;
 
     public function __construct()
     {
@@ -77,19 +77,25 @@ class View extends ViewElement
     }
 
     /**
-     * @param Content $content
+     * Sets container
+     * @param Container $container
      * @return View
      */
-    public function setContent(Content $content) : self
+    public function setContainer(Container $container) : self
     {
-        $this->content = $content;
+        $this->container = $container;
         return $this;
     }
 
-    public function getContent() :? Content
+    /**
+     * Gets container
+     * @return null|Container
+     */
+    public function getContainer() :? Container
     {
-        return $this->content;
+        return $this->container;
     }
+
 
     public function & render() : array
     {
@@ -102,6 +108,7 @@ class View extends ViewElement
         }
 
         $item['menus'] = $menus;
+        $item['view'] = empty($this->getContainer()) ? null : $this->getContainer()->render();
 
         $item = array_merge($item, parent::render());
         return $item;
