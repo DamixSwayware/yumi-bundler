@@ -62,7 +62,8 @@
 
      public function & render() : array
      {
-         return parent::render();
+         $result = parent::render();
+         return $result;
      }
 
  }
