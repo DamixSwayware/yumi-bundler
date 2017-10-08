@@ -2,6 +2,7 @@
 
 namespace Yumi\Bundler\View;
 
+use Yumi\Bundler\Constraint\ConstraintContainer;
 use Yumi\Bundler\View\Exception;
 
 abstract class ViewElement
@@ -37,6 +38,12 @@ abstract class ViewElement
      * @var array
      */
     private $dataAttributes = array();
+
+    /**
+     * Constraint container
+     * @var ConstraintContainer|null
+     */
+    private $constraintContainer = null;
 
     public function __construct()
     {
@@ -140,6 +147,17 @@ abstract class ViewElement
     public function isDataAttributeExists(string $attributeName) : bool
     {
         return isset($this->dataAttributes[trim($attributeName)]);
+    }
+
+    public function setConstraintContainer(ConstraintContainer $constraintContainer) : self
+    {
+        $this->constraintContainer = $constraintContainer;
+        return $this;
+    }
+
+    public function getConstraintContainer() :? ConstraintContainer
+    {
+        return $this->constraintContainer;
     }
 
     public function & render() : array
