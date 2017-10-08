@@ -35,6 +35,8 @@ class Table extends ViewElement
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->elementType = 'table_element';
     }
 
@@ -189,6 +191,7 @@ class Table extends ViewElement
     {
         $renderResult = parent::render();
 
+        $renderResult['total_rows'] = $this->getTotalAmountOfRows();
         $renderResult['columns'] = $this->renderColumns();
         $renderResult['rows'] = $this->renderRows();
 

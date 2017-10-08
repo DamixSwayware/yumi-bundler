@@ -1,7 +1,12 @@
 <?php
 
+/**
+ * @author Reverze <hawkmedia24@gmail.com>
+ */
+
 namespace Yumi\Bundler\View\Table;
 
+use Yumi\Bundler\View\Table\Exception\ColumnException;
 use Yumi\Bundler\View\Table\Sequence\ColumnModifierSequence;
 use Yumi\Bundler\View\ViewElement;
 
@@ -116,20 +121,30 @@ class Column extends ViewElement
      * @param array $values
      * @return mixed
      */
-    public function & executeModifiers(array &$values) : mixed
+    public function & executeModifiers(array &$values)
     {
         $this->modifiers->setSourceName($this->getSourceName());
         $this->modifiers->setSourceData($values);
-        return $this->modifiers->execute();
+        $modifiedValue = $this->modifiers->execute();
+        return $modifiedValue;
     }
 
     /**
      * Renders column
+     * @throws ColumnException
      * @return array
      */
     public function & render() : array
     {
         $renderResult = parent::render();
+
+        if (empty($this->getTitle())){
+            throw new ColumnException("Title of column was not specified");
+        }
+
+        if (empty($this->getName())){
+            throw new ColumnException("Name of column was not specified");
+        }
 
         $renderResult['column_title'] = $this->getTitle();
         $renderResult['column_name'] = $this->getName();

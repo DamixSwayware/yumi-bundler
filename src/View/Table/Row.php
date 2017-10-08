@@ -51,7 +51,7 @@ class Row extends ViewElement
      * @param array $columnContainer
      * @return void
      */
-    private function setColumnContainer(array &$columnContainer) : void
+    private function setColumnContainer(array &$columnContainer) : self
     {
         $this->columnContainer = $columnContainer;
         return $this;
@@ -146,7 +146,7 @@ class Row extends ViewElement
      */
     private function createCells() : void
     {
-        foreach($this->columnContainer as &$columnName => $column){
+        foreach($this->columnContainer as $columnName => $column){
             $cell = new Cell($column);
             $cell->setSourceRowData($this->sourceRowData);
             $cell->generateValue();
@@ -171,6 +171,7 @@ class Row extends ViewElement
     {
         $result = parent::render();
 
+        $result['row_number'] = $this->getRowNumber();
         $result['cells'] = $this->renderCells();
 
         return $result;
