@@ -12,4 +12,6 @@ abstract class InputDriver
     {
 
     }
+
+    public abstract function & fetch() : array ;
 }
