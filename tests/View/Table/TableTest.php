@@ -16,7 +16,7 @@ class TableTest extends TestCase
     /**
      * @test
      */
-    public function shouldRenderWithoutErrors()
+    public function shouldRenderWithoutErrors() : void
     {
         $sourceData = [
             [
@@ -35,10 +35,10 @@ class TableTest extends TestCase
         $table->declareColumn('user.username', 'Nazwa uzytkownika', 'username');
 
         $table->addColumnModifier('user.id', function(&$value, array &$values = array()){
-            return $values['username'] . ' ' . strval($value);
+            return $values['username'] . ' ' . (string) ($value);
         });
 
-        $table->setTotalAmountOfRows(sizeof($sourceData));
+        $table->setTotalAmountOfRows(\count($sourceData));
         $table->setSourceData($sourceData);
 
         $renderResult = $table->render();
@@ -57,7 +57,7 @@ class TableTest extends TestCase
      * @test
      * @expectedException \Yumi\Bundler\View\Table\Exception\TableException
      */
-    public function shouldThrowExceptionOnEmptyColumnName()
+    public function shouldThrowExceptionOnEmptyColumnName() : void
     {
         $table = new \Yumi\Bundler\View\Table\Table();
 
@@ -68,7 +68,7 @@ class TableTest extends TestCase
      * @test
      * @expectedException \Yumi\Bundler\View\Table\Exception\TableException
      */
-    public function shouldThrowExceptionOnEmptyColumnTitle()
+    public function shouldThrowExceptionOnEmptyColumnTitle() : void
     {
         $table = new \Yumi\Bundler\View\Table\Table();
 
@@ -79,7 +79,7 @@ class TableTest extends TestCase
      * @test
      * @expectedException \Yumi\Bundler\View\Table\Exception\TableException
      */
-    public function shouldThrowExceptionWhenColumnObjectDoesNotHaveDefinedColumnName()
+    public function shouldThrowExceptionWhenColumnObjectDoesNotHaveDefinedColumnName() : void
     {
         $column = new \Yumi\Bundler\View\Table\Column();
         $column->setTitle('ID');
@@ -92,7 +92,7 @@ class TableTest extends TestCase
      * @test
      * @expectedException \Yumi\Bundler\View\Table\Exception\TableException
      */
-    public function shouldThrowExceptionWhenColumnObjectDoesNotHaveDefinedColumnTitle()
+    public function shouldThrowExceptionWhenColumnObjectDoesNotHaveDefinedColumnTitle() : void
     {
         $column = new \Yumi\Bundler\View\Table\Column();
         $column->setName('user.id');

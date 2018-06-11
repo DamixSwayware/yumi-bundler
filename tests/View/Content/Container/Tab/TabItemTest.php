@@ -34,7 +34,7 @@ class TabItemTest extends TestCase
         $this->assertArrayHasKey('container', $renderResult);
         $this->assertArrayHasKey('is_active', $renderResult);
 
-        $this->assertNotNull('container', $renderResult['container']);
+        $this->assertNotNull($renderResult['container'], 'container');
         $this->assertEquals('My first tab', $renderResult['title']);
         $this->assertEquals('Tooltop for my first tab', $renderResult['tooltipText']);
         $this->assertEquals(true, $renderResult['is_active']);

@@ -17,5 +17,11 @@
     "psr-4": {
       "Yumi\\Bundler\\": "src/"
     }
+  },
+  "require": {
+    "php": ">=7.2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
   }
 }

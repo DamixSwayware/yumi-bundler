@@ -165,7 +165,9 @@ class Table extends ViewElement
     {
         $this->sourceData = $sourceData;
 
-        for($rowIndex = 0; $rowIndex < sizeof($this->sourceData); $rowIndex++){
+        $sourceDataSize = \count($this->sourceData);
+
+        for($rowIndex = 0; $rowIndex < $sourceDataSize; $rowIndex++){
             $row = new Row($rowIndex + 1, $this->columnContainer,
                 $this->sourceData[$rowIndex], $this->sourceData);
             $this->addRow($row);

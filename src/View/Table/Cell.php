@@ -40,9 +40,10 @@ class Cell extends ViewElement
     /**
      * Generates value using column modifiers
      */
-    public function generateValue()
+    public function generateValue() : self
     {
         $this->value = $this->column->executeModifiers($this->sourceRowData);
+        return $this;
     }
 
     /**
