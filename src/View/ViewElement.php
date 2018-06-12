@@ -45,6 +45,17 @@ abstract class ViewElement
      */
     private $constraintContainer = null;
 
+    /**
+     * @var ViewElement|null
+     */
+    private $innerElement = null;
+
+    /**
+     * Concerns elements where simple value should be used instead of nested elements
+     * @var string|null
+     */
+    private $simpleValue = null;
+
     public function __construct()
     {
         $this->elementType = 'view_element';
@@ -101,8 +112,18 @@ abstract class ViewElement
 
     public function addStyle(string $modifierName, $modifierValue) : self
     {
-        $this->styles[trim($modifierName)] = (string) $modifierValue;
+        $this->styles[strtolower(trim($modifierName))] = (string) $modifierValue;
         return $this;
+    }
+
+    public function getStyle(string $modifierName) : ?string
+    {
+        return $this->styles[strtolower(trim($modifierName))] ?? null;
+    }
+
+    public function hasStyle(string $modifierName) : bool
+    {
+        return isset($this->style[strtolower(trim($modifierName))]);
     }
 
     public function setAttributes(array $attributes) : self
@@ -160,6 +181,30 @@ abstract class ViewElement
         return $this->constraintContainer;
     }
 
+    public function setInnerElement(?ViewElement $viewElement) : self
+    {
+        $this->innerElement = $viewElement;
+
+        return $this;
+    }
+
+    public function getInnerElement() : ?ViewElement
+    {
+        return $this->innerElement;
+    }
+
+    public function setSimpleValue(?string $value) : self
+    {
+        $this->simpleValue = $value;
+
+        return $this;
+    }
+
+    public function getSimpleValue() : ?string
+    {
+        return $this->simpleValue;
+    }
+
     public function & render() : array
     {
         $element = array();
@@ -174,6 +219,9 @@ abstract class ViewElement
         $element['styles'] = $this->getStyles();
         $element['attributes'] = $this->getAttributes();
         $element['dataAttributes'] = $this->getDataAttributes();
+        $element['innerElement'] = $this->innerElement === null ? null :
+            $this->innerElement->render();
+        $element['simpleValue'] = $this->simpleValue;
 
         return $element;
     }

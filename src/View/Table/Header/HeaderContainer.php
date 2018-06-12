@@ -24,19 +24,24 @@ class HeaderContainer extends ViewElement
      */
     private $headerBody = null;
 
+    /**
+     * The footer of header
+     * @var \Yumi\Bundler\View\Table\Header\HeaderFooter
+     */
     private $headerFooter = null;
 
     public function __construct()
     {
         parent::__construct();
-    }
 
+        $this->elementType = 'table_header_container';
+    }
     /**
      * Sets header
      * @param Header $header
      * @return HeaderContainer
      */
-    public function setHeader(Header $header) : self
+    public function setHeader(?Header $header) : self
     {
         $this->header = $header;
 
@@ -47,7 +52,7 @@ class HeaderContainer extends ViewElement
      * Gets header
      * @return Header
      */
-    public function getHeader() : Header
+    public function getHeader() : ?Header
     {
         return $this->header;
     }
@@ -57,7 +62,7 @@ class HeaderContainer extends ViewElement
      * @param HeaderBody $headerBody
      * @return HeaderContainer
      */
-    public function setHeaderBody(HeaderBody $headerBody) : self
+    public function setHeaderBody(?HeaderBody $headerBody) : self
     {
         $this->headerBody = $headerBody;
 
@@ -68,8 +73,41 @@ class HeaderContainer extends ViewElement
      * Gets body of header
      * @return HeaderBody
      */
-    public function getHeaderBody() : HeaderBody
+    public function getHeaderBody() : ?HeaderBody
     {
         return $this->headerBody;
     }
+
+    /**
+     * Sets header footer
+     * @param HeaderFooter $headerFooter
+     * @return HeaderContainer
+     */
+    public function setHeaderFooter(?HeaderFooter $headerFooter) : self
+    {
+        $this->headerFooter = $headerFooter;
+
+        return $this;
+    }
+
+    /**
+     * Gets header footer
+     * @return HeaderFooter
+     */
+    public function getHeaderFooter() : ?HeaderFooter
+    {
+        return $this->headerFooter;
+    }
+
+    public function & render() : array
+    {
+        $renderResult = parent::render();
+
+        $renderResult['header'] = $this->header !== null ? $this->header->render() : null;
+        $renderResult['body'] = $this->headerBody !== null ? $this->headerBody : null;
+        $renderResult['footer'] = $this->headerFooter !== null ? $this->headerFooter : null;
+
+        return $renderResult;
+    }
+
 }
