@@ -8,9 +8,9 @@
 
 namespace Yumi\Bundler\View\Shared\Image;
 
-use Yumi\Bundler\View\ViewElement;
+use Yumi\Bundler\View\Shared\Image\Exception\ImageElementException;
 
-class SimpleImageElement extends ViewElement
+class SimpleImageElement extends ImageElementAbstract
 {
     private $imageSource = null;
 
@@ -49,10 +49,17 @@ class SimpleImageElement extends ViewElement
 
     public function & render() : array
     {
-        $renderResult = parent::render();
+        if (empty($this->getImageSource())){
+            throw new ImageElementException('The image source is not defined');
+        }
 
-        $renderResult['imageSource'] = $this->getImageSource();
-        $renderResult['imageDescription'] = $this->getImageDescription();
+        $this->addAttribute('src', $this->getImageSource());
+
+        if (!empty($this->getImageDescription())){
+            $this->addAttribute('alt', $this->getImageDescription());
+        }
+
+        $renderResult = parent::render();
 
         return $renderResult;
     }

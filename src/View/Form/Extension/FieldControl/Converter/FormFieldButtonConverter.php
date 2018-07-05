@@ -1,0 +1,47 @@
+<?php
+
+namespace Yumi\Bundler\View\Form\Extension\FieldControl\Converter;
+
+use Yumi\Bundler\View\Form\FormField;
+use Yumi\Bundler\View\Form\FormFieldType;
+use Yumi\Bundler\View\Shared\Button\ImageButtonElement;
+use Yumi\Bundler\View\Shared\Button\SimpleButtonElement;
+use Yumi\Bundler\View\ViewElement;
+
+/**
+ * Trait FormFieldTextInputConverter
+ * @package Yumi\Bundler\View\Form\Extension\FieldControl\Converter
+ * @author Reverze <hawkmedia24@gmail.com>
+ * This file is a part of YumiBundler
+ *
+ * This converter allows to convert text input field to text input control.
+ */
+trait FormFieldButtonConverter
+{
+    /**
+     * Registers a converter
+     * @return FormFieldTextInputConverter
+     */
+    protected function _registerFormFieldButtonConverter(): self
+    {
+        $self = $this;
+
+        $this->fieldControlConverters[FormFieldType::BUTTON] = function(FormField $formField) use(&$self){
+
+            $buttonControl = !empty($formField->getOptions()->image_source) ?
+                new ImageButtonElement() : new SimpleButtonElement();
+
+            $buttonControl->setId(ViewElement::getUniqueIDForElement($buttonControl));
+
+            if ($formField->getOptions()){
+                $buttonControl->addAttributes($formField->getOptions()->castAsArray());
+            }
+
+            $buttonControl->addAttribute('value', $formField->getValue());
+
+            return $buttonControl;
+        };
+
+        return $this;
+    }
+}

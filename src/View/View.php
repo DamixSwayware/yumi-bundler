@@ -24,6 +24,8 @@ class View extends ViewElement
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->elementType = 'view_element';
     }
 

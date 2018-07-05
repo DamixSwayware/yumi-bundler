@@ -1,23 +1,22 @@
 <?php
 
-/**
- * This file is a part of YumiBundler
- *
- * @Author Reverze <hawkmedia24@gmail.com>
- */
-
 namespace Yumi\Bundler\View\Shared\Textual;
-
-
 use Yumi\Bundler\View\ViewElement;
 
-class TextElement extends ViewElement
+/**
+ * Class HiddenInputElement
+ * @package Yumi\Bundler\View\Shared\Textual
+ *
+ * @author Reverze <hawkmedia24@gmail.com>
+ * This file is a part of YumiBundler
+ */
+class HiddenInputElement extends ViewElement
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->elementType = 'text_element';
+        $this->elementType = 'hidden_element';
     }
 
     public function & render() : array

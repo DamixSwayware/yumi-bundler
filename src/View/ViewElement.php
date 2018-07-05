@@ -56,6 +56,16 @@ abstract class ViewElement
      */
     private $simpleValue = null;
 
+    private static $idGeneratorSequence = 1;
+
+    public static function getUniqueIDForElement(ViewElement $viewElement) : string
+    {
+        $uniqueIdentifier = md5($viewElement->elementType . self::$idGeneratorSequence);
+        self::$idGeneratorSequence++;
+
+        return $uniqueIdentifier;
+    }
+
     public function __construct()
     {
         $this->elementType = 'view_element';
@@ -79,6 +89,11 @@ abstract class ViewElement
     public function getAttributes() : array
     {
         return $this->attributes;
+    }
+
+    public function getAttribute(string $attributeName)
+    {
+        return $this->attributes[$attributeName] ?? null;
     }
 
     public function getDataAttributes() : array
@@ -134,7 +149,16 @@ abstract class ViewElement
 
     public function addAttribute(string $attributeName, $attributeValue) : self
     {
-        $this->attributes[trim($attributeName)] = (string) $attributeValue;
+        $this->attributes[trim($attributeName)] = null === $attributeValue ? null : (string) $attributeValue;
+        return $this;
+    }
+
+    public function addAttributes(array $attributes) : self
+    {
+        foreach($attributes as $attributeName => $attributeValue){
+            $this->attributes[trim($attributeName)] = null === $attributeValue ? null : (string) $attributeValue;
+        }
+
         return $this;
     }
 
