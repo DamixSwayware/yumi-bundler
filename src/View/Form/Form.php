@@ -8,6 +8,7 @@ use Yumi\Bundler\View\Form\Extension\FormActionExtension;
 use Yumi\Bundler\View\Form\Extension\FormSubmitExtension;
 use Yumi\Bundler\View\Form\Extension\FormFieldControlConverterExtension;
 use Yumi\Bundler\View\Form\Exception\FormException;
+use Yumi\Bundler\View\Form\Processor\Form\FormMatchProcessor;
 use Yumi\Bundler\View\Form\Processor\FormProcessor;
 use Yumi\Bundler\View\Form\Processor\FormProcessorAbstract;
 use Yumi\Bundler\View\ViewElement;
@@ -25,9 +26,9 @@ class Form extends FormAbstract
     use FormSubmitExtension;
     use FormFieldControlConverterExtension;
 
-    public function __construct()
+    public function __construct(string $formName)
     {
-        parent::__construct();
+        parent::__construct($formName);
 
         $this->registerDefaultProcessors();
     }
@@ -35,6 +36,12 @@ class Form extends FormAbstract
     protected function registerDefaultProcessors() : void
     {
         $self = $this;
+
+        $this->addProcessor(new FormMatchProcessor());
+
+        $this->addProcessor((new FormProcessor())->setExecuteCallback(function() use (&$self){
+            return $self->processOnSubmit();
+        }));
 
         $this->addProcessor((new FormProcessor())->setExecuteCallback(function() use(&$self){
             return $self->processPerformedActions();

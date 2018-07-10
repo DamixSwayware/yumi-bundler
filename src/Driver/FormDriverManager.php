@@ -38,4 +38,9 @@ class FormDriverManager
     {
         return new $this->defaultFormDriverClass($form);
     }
+
+    public static function hashFormName(string $formName) : string
+    {
+        return md5($formName);
+    }
 }

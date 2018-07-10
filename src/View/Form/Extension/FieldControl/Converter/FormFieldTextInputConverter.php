@@ -29,13 +29,7 @@ trait FormFieldTextInputConverter
 
             $textControl = new TextElement();
 
-            if (!empty($formField->getName())){
-                $textControl->addAttribute('name', $formField->getName());
-            }
-
-            if ($formField->getOptions()){
-                $textControl->addAttributes($formField->getOptions()->castAsArray());
-            }
+            BaseControlConverter::convert($textControl, $formField);
 
             if (empty($textControl->getId()) && $formField->hasOption('label')){
                 $textControl->setId(ViewElement::getUniqueIDForElement($textControl));

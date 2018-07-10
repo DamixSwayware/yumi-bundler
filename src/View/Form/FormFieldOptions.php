@@ -12,6 +12,10 @@ class FormFieldOptions
 
     public $label = null;
 
+    private $customProperties = array();
+
+    protected $listenedEvents = array();
+
     public function addAllowNull(string $optionName) : self
     {
         if (!\in_array($optionName, $this->allowNulls, true)){
@@ -29,17 +33,17 @@ class FormFieldOptions
 
     public function __get($name)
     {
-        return property_exists($this, $name) ? $this->{$name} : null;
+        return $this->customProperties[$name] ?? null;
     }
 
     public function __set($name, $value)
     {
-        $this->{$name} = $value;
+        $this->customProperties[$name] = $value;
     }
 
     public function __isset($name)
     {
-        return property_exists($this, $name);
+        return isset($this->customProperties[$name]);
     }
 
     public function castAsArray() : array
@@ -63,6 +67,8 @@ class FormFieldOptions
             $properties[$reflectedProperty->name] = null === $propertyValue ? null : (string) $propertyValue;
 
         }
+
+        $properties = \array_merge($properties, $this->customProperties);
 
         return $properties;
     }

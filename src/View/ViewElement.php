@@ -149,7 +149,7 @@ abstract class ViewElement
 
     public function addAttribute(string $attributeName, $attributeValue) : self
     {
-        $this->attributes[trim($attributeName)] = null === $attributeValue ? null : (string) $attributeValue;
+        $this->attributes[trim($attributeName)] = null === $attributeValue ? null : $attributeValue;
         return $this;
     }
 

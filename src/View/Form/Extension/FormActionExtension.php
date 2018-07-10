@@ -22,6 +22,8 @@ trait FormActionExtension
 
     protected $formActionUniquenessValidatorCallback = null;
 
+    protected $formSubmitCallable = array();
+
     /**
      * Allows to set callback on the case when uniqueness of form actions was broken.
      * @param callable $callable
@@ -193,5 +195,29 @@ trait FormActionExtension
         $this->formActions[$actionName][] = $callable;
 
         return $this;
+    }
+
+    /**
+     * Triggers when form has been submitted
+     * @param callable $callable
+     * @return FormActionExtension
+     */
+    public function onSubmit(callable $callable) : self
+    {
+        $this->formSubmitCallable[] = $callable;
+
+        return $this;
+    }
+
+    protected function processOnSubmit() : bool
+    {
+        $formEvent = new FormEvent();
+
+        foreach($this->formSubmitCallable as &$callback){
+
+            $callback($formEvent);
+        }
+
+        return true;
     }
 }

@@ -3,6 +3,7 @@
 namespace Yumi\Bundler\View\Form\FormField\Extension;
 
 use Yumi\Bundler\View\Form\FormField\Event\FormFieldValueChangedEvent;
+use Yumi\Bundler\View\Form\FormFieldOptions;
 
 /**
  * Trait FormFieldEventExtension
@@ -16,9 +17,15 @@ trait FormFieldEventExtension
 {
     protected $onChangedValueCallback = null;
 
+    protected $listenedEvents = array();
+
     public function onChangedValue(?callable $callback) : self
     {
         $this->onChangedValueCallback = $callback;
+
+        if ($callback !== null && !isset($this->listenedEvents['changed_value'])){
+            $this->listenedEvents['changed_value'] = true;
+        }
 
         return $this;
     }
@@ -36,5 +43,10 @@ trait FormFieldEventExtension
 
 
         return $this;
+    }
+
+    public function getListenedEvents() : array
+    {
+        return $this->listenedEvents;
     }
 }

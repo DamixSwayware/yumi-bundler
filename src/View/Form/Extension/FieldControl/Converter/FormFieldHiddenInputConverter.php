@@ -28,9 +28,7 @@ trait FormFieldHiddenInputConverter
 
             $hiddenControl = new HiddenInputElement();
 
-            if (!empty($formField->getName())){
-                $hiddenControl->addAttribute('name', $formField->getName());
-            }
+            BaseControlConverter::convert($hiddenControl, $formField);
 
             if (!empty($formField->getValue())){
                 $hiddenControl->addAttribute('value', $formField->getValue());

@@ -2,6 +2,7 @@
 
 namespace Yumi\Bundler\View\Form;
 
+use Yumi\Bundler\Driver\FormDriverAbstract;
 use Yumi\Bundler\View\Form\Processor\FormProcessorAbstract;
 use Yumi\Bundler\View\ViewElement;
 use Yumi\Bundler\Driver\FormDriverInterface;
@@ -18,6 +19,8 @@ abstract class FormAbstract extends ViewElement
 
     public const METHOD_DELETE = 'DELETE';
 
+    public const FORM_NAME_FIELD = 'form_name';
+
     protected $fields = array();
 
     /**
@@ -30,13 +33,36 @@ abstract class FormAbstract extends ViewElement
      */
     protected $processors = array();
 
-    public function __construct()
+    /**
+     * The name of form
+     * @var string|null
+     */
+    protected $name = null;
+
+    public function __construct(string $formName)
     {
         parent::__construct();
 
         $this->elementType = 'form';
 
+        $this->name = $formName;
+
         $this->formDriver = FormDriverManager::getManager()->createFromDefaultFromDriver($this);
+
+
+        $this->addField(self::FORM_NAME_FIELD, FormFieldType::HIDDEN_INPUT);
+        $this->getField(self::FORM_NAME_FIELD)->setValue(FormDriverManager::hashFormName($formName));
+
+        $this->addAttribute('name', $formName);
+    }
+
+    /**
+     * Gets form driver used by form
+     * @return FormDriverAbstract
+     */
+    public function getFormDriver() : FormDriverAbstract
+    {
+        return $this->formDriver;
     }
 
     /**
@@ -153,6 +179,10 @@ abstract class FormAbstract extends ViewElement
         return $this->getAttribute('method');
     }
 
+    public function getName() : string
+    {
+        return $this->name;
+    }
 
     private function insertValueIntoField(FormField $formField) : void
     {
