@@ -5,6 +5,7 @@ namespace Yumi\Bundler\View\Form;
 use Yumi\Bundler\Driver\FormDriverInterface;
 use Yumi\Bundler\Driver\FormDriverManager;
 use Yumi\Bundler\View\Form\Extension\FormActionExtension;
+use Yumi\Bundler\View\Form\Extension\FormFieldBuilderExtension;
 use Yumi\Bundler\View\Form\Extension\FormSubmitExtension;
 use Yumi\Bundler\View\Form\Extension\FormFieldControlConverterExtension;
 use Yumi\Bundler\View\Form\Exception\FormException;
@@ -25,6 +26,7 @@ class Form extends FormAbstract
     use FormActionExtension;
     use FormSubmitExtension;
     use FormFieldControlConverterExtension;
+    use FormFieldBuilderExtension;
 
     public function __construct(string $formName)
     {
@@ -47,6 +49,7 @@ class Form extends FormAbstract
             return $self->processPerformedActions();
         }));
     }
+
 
     public function & render() : array
     {

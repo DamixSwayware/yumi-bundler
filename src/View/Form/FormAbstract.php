@@ -130,6 +130,24 @@ abstract class FormAbstract extends ViewElement
     }
 
     /**
+     * Groups fields by type
+     * @param string $fieldType
+     * @return array
+     */
+    public function groupFieldByType(string $fieldType) : array
+    {
+        $result = array();
+
+        foreach($this->fields as $fieldName => $field){
+            if ($field->getType() === $fieldType){
+                $result[$fieldName] = $field;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Gets the value under field
      * @param string $fieldName
      * @return mixed|null
@@ -184,7 +202,7 @@ abstract class FormAbstract extends ViewElement
         return $this->name;
     }
 
-    private function insertValueIntoField(FormField $formField) : void
+    protected function insertValueIntoField(FormField $formField) : void
     {
         $formField->setValue($this->formDriver->getFieldValue($formField->getName()));
     }

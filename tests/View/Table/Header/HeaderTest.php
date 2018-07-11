@@ -55,9 +55,9 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
         $renderResult = $tableHeader->render();
 
         $this->assertEquals('example.com/example.png',
-            $renderResult['innerElement']['elements'][0]['imageSource']
+            $renderResult['innerElement']['elements'][0]['attributes']['src']
         );
-        $this->assertNull($renderResult['innerElement']['elements'][0]['imageDescription']);
+        $this->assertNull($renderResult['innerElement']['elements'][0]['attributes']['alt'] ?? null);
         $this->assertEquals('example',
             $renderResult['innerElement']['elements'][1]['simpleValue']
         );
@@ -71,9 +71,9 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
         $renderResult = $tableHeader->render();
 
         $this->assertEquals('example.com/example.png',
-            $renderResult['innerElement']['elements'][0]['imageSource']
+            $renderResult['innerElement']['elements'][0]['attributes']['src']
         );
-        $this->assertEquals('exampleDesc', $renderResult['innerElement']['elements'][0]['imageDescription']);
+        $this->assertEquals('exampleDesc', $renderResult['innerElement']['elements'][0]['attributes']['alt']);
         $this->assertEquals('example',
             $renderResult['innerElement']['elements'][1]['simpleValue']
         );

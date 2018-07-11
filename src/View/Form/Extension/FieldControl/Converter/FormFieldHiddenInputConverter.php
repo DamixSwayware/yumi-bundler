@@ -18,13 +18,13 @@ trait FormFieldHiddenInputConverter
 {
     /**
      * Registers a converter
-     * @return FormFieldTextInputConverter
+     * @return callable
      */
-    protected function _registerFormFieldHiddenInputConverter(): self
+    protected function _registerFormFieldHiddenInputConverter(): callable
     {
         $self = $this;
 
-        $this->fieldControlConverters[FormFieldType::HIDDEN_INPUT] = function(FormField $formField) use(&$self){
+        $converter = function(FormField $formField) use(&$self){
 
             $hiddenControl = new HiddenInputElement();
 
@@ -37,6 +37,8 @@ trait FormFieldHiddenInputConverter
             return $hiddenControl;
         };
 
-        return $this;
+        $this->fieldControlConverters[FormFieldType::HIDDEN_INPUT] = $converter;
+
+        return $converter;
     }
 }

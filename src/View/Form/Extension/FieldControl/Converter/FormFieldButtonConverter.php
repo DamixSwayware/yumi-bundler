@@ -20,13 +20,13 @@ trait FormFieldButtonConverter
 {
     /**
      * Registers a converter
-     * @return FormFieldTextInputConverter
+     * @return callable
      */
-    protected function _registerFormFieldButtonConverter(): self
+    protected function _registerFormFieldButtonConverter(): callable
     {
         $self = $this;
 
-        $this->fieldControlConverters[FormFieldType::BUTTON] = function(FormField $formField) use(&$self){
+        $converter = function(FormField $formField) use(&$self){
 
             $buttonControl = !empty($formField->getOptions()->image_source) ?
                 new ImageButtonElement() : new SimpleButtonElement();
@@ -42,6 +42,8 @@ trait FormFieldButtonConverter
             return $buttonControl;
         };
 
-        return $this;
+        $this->fieldControlConverters[FormFieldType::BUTTON] = $converter;
+
+        return $converter;
     }
 }

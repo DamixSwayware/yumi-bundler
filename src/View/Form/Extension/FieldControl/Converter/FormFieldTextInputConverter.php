@@ -19,13 +19,13 @@ trait FormFieldTextInputConverter
 {
     /**
      * Registers a converter
-     * @return FormFieldTextInputConverter
+     * @return callable
      */
-    protected function _registerFormFieldTextInputConverter(): self
+    protected function _registerFormFieldTextInputConverter(): callable
     {
         $self = $this;
 
-        $this->fieldControlConverters[FormFieldType::TEXT_INPUT] = function(FormField $formField) use(&$self){
+        $callable = function(FormField $formField) use(&$self){
 
             $textControl = new TextElement();
 
@@ -42,6 +42,8 @@ trait FormFieldTextInputConverter
             return $textControl;
         };
 
-        return $this;
+        $this->fieldControlConverters[FormFieldType::TEXT_INPUT] = $callable;
+
+        return $callable;
     }
 }

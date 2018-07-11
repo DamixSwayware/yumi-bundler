@@ -4,7 +4,9 @@ namespace Yumi\Bundler\View\Form\Extension;
 
 use Yumi\Bundler\View\Form\Exception\FormException;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldButtonConverter;
+use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldCheckboxInputConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldHiddenInputConverter;
+use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldRadioButtonGroupConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldTextInputConverter;
 
 /**
@@ -32,6 +34,16 @@ trait FormFieldControlConverterExtension
      */
     use FormFieldButtonConverter;
 
+    /**
+     * Converts checkbox input into checkbox control
+     */
+    use FormFieldCheckboxInputConverter;
+
+    /**
+     * Converts radio button group into radio button group control
+     */
+    use FormFieldRadioButtonGroupConverter;
+
     protected $fieldControlConverters = array();
 
     protected function registerConverters() : self
@@ -39,6 +51,8 @@ trait FormFieldControlConverterExtension
         $this->_registerFormFieldTextInputConverter();
         $this->_registerFormFieldHiddenInputConverter();
         $this->_registerFormFieldButtonConverter();
+        $this->_registerFormFieldCheckboxInputConverter();
+        $this->_registerFormFieldRadioButtonGroupConverter();
 
         return $this;
     }

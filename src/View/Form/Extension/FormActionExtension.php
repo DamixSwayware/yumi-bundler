@@ -167,7 +167,7 @@ trait FormActionExtension
             return false;
         }
 
-        $formEvent = new FormEvent();
+        $formEvent = new FormEvent($this);
 
         foreach($this->formActions[$actionIdentifier] as $callback){
             $callbackResult = $callback($formEvent);
@@ -211,7 +211,7 @@ trait FormActionExtension
 
     protected function processOnSubmit() : bool
     {
-        $formEvent = new FormEvent();
+        $formEvent = new FormEvent($this);
 
         foreach($this->formSubmitCallable as &$callback){
 
