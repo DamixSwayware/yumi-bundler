@@ -105,7 +105,7 @@ abstract class FormAbstract extends ViewElement
      * @return Form
      * @throws FormException
      */
-    public function addField(string $fieldName, string $fieldType, FormFieldOptions $options = null, bool $override = false) : self
+    protected function addField(string $fieldName, string $fieldType, FormFieldOptions $options = null, bool $override = false) : self
     {
         if ($override === false && isset($this->fields[$fieldName])){
             throw new FormException('The field \'' . $fieldName . '\' is already defined for that form. If you want to override field please set parameter override to true');

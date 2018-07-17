@@ -7,6 +7,7 @@ use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldButtonConve
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldCheckboxInputConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldHiddenInputConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldRadioButtonGroupConverter;
+use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldSelectBoxConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldTextInputConverter;
 
 /**
@@ -44,6 +45,11 @@ trait FormFieldControlConverterExtension
      */
     use FormFieldRadioButtonGroupConverter;
 
+    /**
+     * Converts select box field into select box control
+     */
+    use FormFieldSelectBoxConverter;
+
     protected $fieldControlConverters = array();
 
     protected function registerConverters() : self
@@ -53,6 +59,7 @@ trait FormFieldControlConverterExtension
         $this->_registerFormFieldButtonConverter();
         $this->_registerFormFieldCheckboxInputConverter();
         $this->_registerFormFieldRadioButtonGroupConverter();
+        $this->_registerFormFieldSelectBoxConverter();
 
         return $this;
     }

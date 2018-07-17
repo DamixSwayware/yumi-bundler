@@ -153,6 +153,17 @@ abstract class ViewElement
         return $this;
     }
 
+    public function deleteAttribute(string $attributeName) : self
+    {
+        $attributeName = trim($attributeName);
+
+        if (isset($this->attributes[$attributeName])){
+            unset($this->attributes[$attributeName]);
+        }
+
+        return $this;
+    }
+
     public function addAttributes(array $attributes) : self
     {
         foreach($attributes as $attributeName => $attributeValue){

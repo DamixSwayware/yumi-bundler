@@ -41,4 +41,9 @@ abstract class FormFieldType
      * Represents the group of the radio buttons
      */
     public const RADIO_BUTTON_GROUP = 'radio_button_group';
+
+    /**
+     * Represents the select box element
+     */
+    public const SELECT_BOX = 'select_box';
 }

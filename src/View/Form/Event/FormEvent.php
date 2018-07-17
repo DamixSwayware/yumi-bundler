@@ -40,4 +40,9 @@ class FormEvent
 
         return (int) $this->form->getFieldValue($checkboxName) === 1;
     }
+
+    public function getValue(string $fieldName)
+    {
+        return $this->form->getFieldValue($fieldName);
+    }
 }
