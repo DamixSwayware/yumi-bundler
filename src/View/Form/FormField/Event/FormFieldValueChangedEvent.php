@@ -8,7 +8,7 @@ class FormFieldValueChangedEvent extends FormEvent
 {
     protected $value = null;
 
-    public function getValue()
+    public function getFieldValue()
     {
         return $this->value;
     }

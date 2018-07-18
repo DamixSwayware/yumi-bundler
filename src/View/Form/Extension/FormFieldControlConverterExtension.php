@@ -10,6 +10,7 @@ use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldNumericInpu
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldRadioButtonGroupConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldSelectBoxConverter;
 use Yumi\Bundler\View\Form\Extension\FieldControl\Converter\FormFieldTextInputConverter;
+use Yumi\Bundler\View\ViewElement;
 
 /**
  * Trait FormFieldControlConverterExtension
@@ -58,6 +59,11 @@ trait FormFieldControlConverterExtension
 
     protected $fieldControlConverters = array();
 
+    /**
+     * @var array[]
+     */
+    protected $viewControlRenderMiddlewares = array();
+
     protected function registerConverters() : self
     {
         $this->_registerFormFieldTextInputConverter();
@@ -100,6 +106,23 @@ trait FormFieldControlConverterExtension
         return $controls;
     }
 
+    /**
+     * Adds a middleware which will be called before rendering control
+     * @param string $fieldName
+     * @param callable $middleware
+     * @return FormFieldControlConverterExtension
+     */
+    public function addMiddlewareBeforeRenderControl(string $fieldName, callable $middleware) : self
+    {
+        if (!isset($this->viewControlRenderMiddlewares[$fieldName])){
+            $this->viewControlRenderMiddlewares[$fieldName] = array();
+        }
+
+        $this->viewControlRenderMiddlewares[$fieldName][] = $middleware;
+
+        return $this;
+    }
+
     public function & renderFields() : array
     {
         $fields = array();
@@ -110,6 +133,16 @@ trait FormFieldControlConverterExtension
         $formControls = $this->castFieldsToFieldControls($this->fields);
 
         foreach($formControls as $control){
+
+            $fieldName = $control->getAttribute('name') ?? null;
+
+            if (!empty($fieldName) && isset($this->viewControlRenderMiddlewares[$fieldName])){
+
+                foreach($this->viewControlRenderMiddlewares[$fieldName] as $middleware){
+                    $middleware($control);
+                }
+            }
+
             $fields[] = $control->render();
         }
 

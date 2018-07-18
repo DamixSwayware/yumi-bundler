@@ -30,12 +30,17 @@ trait FormFieldEventExtension
         return $this;
     }
 
+    public function hasOnChangedValueCallback() : bool
+    {
+        return $this->onChangedValueCallback !== null;
+    }
+
     public function setValue($value)
     {
         parent::setValue($value);
 
         if ($this->onChangedValueCallback !== null){
-            $event = new FormFieldValueChangedEvent();
+            $event = new FormFieldValueChangedEvent($this->getForm());
             $event->setValue($value);
 
             ($this->onChangedValueCallback)($event);

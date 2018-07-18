@@ -37,6 +37,11 @@ trait FormFieldButtonConverter
                 $buttonControl->addAttributes($formField->getOptions()->castAsArray());
             }
 
+            if (!empty($formField->getOptions()->actionName)){
+                $buttonControl->addAttribute('name', $formField->getOptions()->actionName);
+            }
+
+
             $buttonControl->addAttribute('value', $formField->getValue());
 
             return $buttonControl;

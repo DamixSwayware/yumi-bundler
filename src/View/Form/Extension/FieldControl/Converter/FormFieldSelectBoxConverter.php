@@ -58,6 +58,10 @@ trait FormFieldSelectBoxConverter
                 }
             }
 
+            if (empty($selectBoxElement->getId())){
+                $selectBoxElement->setId(ViewElement::getUniqueIDForElement($selectBoxElement));
+            }
+
 
             return $selectBoxElement;
 

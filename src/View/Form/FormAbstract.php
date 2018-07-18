@@ -21,6 +21,9 @@ abstract class FormAbstract extends ViewElement
 
     public const FORM_NAME_FIELD = 'form_name';
 
+    /**
+     * @var FormField[]
+     */
     protected $fields = array();
 
     /**

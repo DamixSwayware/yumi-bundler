@@ -6,6 +6,7 @@ use Yumi\Bundler\Driver\FormDriverInterface;
 use Yumi\Bundler\Driver\FormDriverManager;
 use Yumi\Bundler\View\Form\Extension\FormActionExtension;
 use Yumi\Bundler\View\Form\Extension\FormFieldBuilderExtension;
+use Yumi\Bundler\View\Form\Extension\FormFieldEventExtension;
 use Yumi\Bundler\View\Form\Extension\FormSubmitExtension;
 use Yumi\Bundler\View\Form\Extension\FormFieldControlConverterExtension;
 use Yumi\Bundler\View\Form\Exception\FormException;
@@ -27,6 +28,7 @@ class Form extends FormAbstract
     use FormSubmitExtension;
     use FormFieldControlConverterExtension;
     use FormFieldBuilderExtension;
+    use FormFieldEventExtension;
 
     public function __construct(string $formName)
     {
@@ -40,6 +42,10 @@ class Form extends FormAbstract
         $self = $this;
 
         $this->addProcessor(new FormMatchProcessor());
+
+        $this->addProcessor((new FormProcessor())->setExecuteCallback(function() use(&$self){
+            return $self->processFieldEvents();
+        }));
 
         $this->addProcessor((new FormProcessor())->setExecuteCallback(function() use (&$self){
             return $self->processOnSubmit();

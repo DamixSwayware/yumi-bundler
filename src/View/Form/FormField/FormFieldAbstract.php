@@ -2,6 +2,7 @@
 
 namespace Yumi\Bundler\View\Form\FormField;
 
+use Yumi\Bundler\View\Form\FormAbstract;
 use Yumi\Bundler\View\Form\FormFieldOptions;
 
 /**
@@ -22,11 +23,24 @@ abstract class FormFieldAbstract
 
     protected $value = null;
 
+    protected $form = null;
+
     public function __construct(string $name, string $type, FormFieldOptions $options = null)
     {
         $this->fieldName = $name;
         $this->fieldType = $type;
         $this->fieldOptions = $options;
+    }
+
+    public function setForm(FormAbstract $formAbstract) : self
+    {
+        $this->form = $formAbstract;
+        return $this;
+    }
+
+    public function getForm() : ?FormAbstract
+    {
+        return $this->form;
     }
 
     public function getName() : string

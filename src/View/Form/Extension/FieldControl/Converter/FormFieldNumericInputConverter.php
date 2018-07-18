@@ -58,6 +58,10 @@ trait FormFieldNumericInputConverter
                 $numericInput->setId(ViewElement::getUniqueIDForElement($numericInput));
             }
 
+            if (!empty($formField->getValue())){
+                $numericInput->addAttribute('value', $formField->getValue());
+            }
+
             return $numericInput;
         };
 
