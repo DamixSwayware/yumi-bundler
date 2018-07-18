@@ -2,6 +2,7 @@
 
 namespace Yumi\Bundler\View\Form\Extension;
 use Yumi\Bundler\View\Form\FieldOptions\CheckboxFieldOptions;
+use Yumi\Bundler\View\Form\FieldOptions\NumericInputFieldOptions;
 use Yumi\Bundler\View\Form\FieldOptions\TextFormFieldOptions;
 use Yumi\Bundler\View\Form\FormField\RadioButtonGroup\RadioButtonGroupFormField;
 use Yumi\Bundler\View\Form\FormField\SelectBox\SelectBoxFormField;
@@ -62,6 +63,21 @@ trait FormFieldBuilderExtension
         $options = $options ?? new CheckboxFieldOptions();
 
         $this->addField($checkboxName, FormFieldType::CHECKBOX, $options);
+
+        return $this;
+    }
+
+    /**
+     * Adds numeric input
+     * @param string $inputName
+     * @param null|NumericInputFieldOptions $options
+     * @return FormFieldBuilderExtension
+     */
+    public function addNumericInput(string $inputName, ?NumericInputFieldOptions $options = null) : self
+    {
+        $options = $options ?? new NumericInputFieldOptions();
+
+        $this->addField($inputName, FormFieldType::NUMERIC_INPUT, $options);
 
         return $this;
     }

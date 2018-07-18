@@ -46,4 +46,9 @@ abstract class FormFieldType
      * Represents the select box element
      */
     public const SELECT_BOX = 'select_box';
+
+    /**
+     * Represents the numeric input
+     */
+    public const NUMERIC_INPUT = 'numeric_input';
 }
